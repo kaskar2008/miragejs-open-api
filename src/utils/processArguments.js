@@ -26,6 +26,7 @@ function getProcessArguments() {
       type: "number",
       nargs: 1
     }).argv;
+
   return argv;
 }
 
