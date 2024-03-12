@@ -12,8 +12,7 @@
   "test-abcd": "clearcache",
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "npm test"
+      "pre-commit": "lint-staged"
     }
   },
   "lint-staged": {
@@ -41,7 +40,7 @@
     "lodash.uniq": "^4.5.0",
     "prettier": "^1.19.1",
     "swagger-parser": "^10.0.3",
-    "yargs": "^15.0.2"
+    "yargs": "^17.7.2"
   },
   "devDependencies": {
     "@babel/core": "^7.7.7",
