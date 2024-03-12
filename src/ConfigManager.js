@@ -3,10 +3,12 @@ const { getProcessArguments } = require("./utils/processArguments");
 const ConfigManager = (function() {
   let instance;
   function create() {
-    const { output, input } = getProcessArguments();
+    const { output, input, map, seed } = getProcessArguments();
     return {
       output,
-      input
+      input,
+      map,
+      seed
     };
   }
 

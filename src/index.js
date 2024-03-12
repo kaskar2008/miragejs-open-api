@@ -7,6 +7,21 @@ const { getResponse } = require("./response");
 const replaceParamNotation = url => url.replace("{", ":").replace("}", "");
 
 const generateRouteFromPath = (pathString, pathDefinition) => {
+  let commonParams = [];
+
+  if (pathDefinition.parameters) {
+    commonParams = [...pathDefinition.parameters];
+
+    delete pathDefinition.parameters;
+
+    Object.keys(pathDefinition).forEach(key => {
+      pathDefinition[key]["parameters"] = [
+        ...(pathDefinition[key]["parameters"] || []),
+        ...commonParams
+      ];
+    });
+  }
+
   const verbsInPath = Object.keys(pathDefinition);
 
   return verbsInPath.reduce((acc, verb) => {

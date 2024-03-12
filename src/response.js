@@ -1,9 +1,21 @@
+const path = require("path");
+const process = require("process");
 const jsf = require("json-schema-faker");
-const faker = require("faker");
-const propertyNameInferenceMap = require("../mirage-open-api");
+const { ConfigManager } = require("./ConfigManager");
+const propertyNameInferenceMap = ConfigManager.map
+  ? require(path.join(process.cwd(), ConfigManager.map))
+  : {};
 
-jsf.option("alwaysFakeOptionals", true);
-jsf.extend("faker", () => faker);
+jsf.option({
+  alwaysFakeOptionals: true,
+  fillProperties: false,
+  sortProperties: true,
+  reuseProperties: true,
+  useDefaultValue: true,
+  useExamplesValue: true,
+  refDepthMax: 10,
+  random: () => 0.000001
+});
 
 function inferBasedOnPropertyName(json) {
   if (Array.isArray(json)) {
@@ -19,7 +31,7 @@ function inferBasedOnPropertyName(json) {
     }
 
     return Object.assign({}, final, {
-      [key]: isKeyPresent ? propertyNameInferenceMap[key]() : value
+      [key]: isKeyPresent ? propertyNameInferenceMap[key](value) : value
     });
   }, {});
 }
